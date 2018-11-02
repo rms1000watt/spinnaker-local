@@ -1,0 +1,25 @@
+version: '3'
+services:
+  hal-bootstrap:
+    container_name: hal-bootstrap
+    environment:
+      MINIO_ACCESS_KEY: 93UD14VE2K1SHSSZE3TU
+      MINIO_SECRET_KEY: Ak6OnEEkroAPYiUU4u73zePedB5Zz0ByNgsLfjhe
+    image: hal-bootstrap
+    network_mode: host
+    depends_on:
+    - minio
+    volumes:
+    - ~/.hal:/home/spinnaker/.hal
+    - ~/.kube:/home/spinnaker/.kube
+
+  minio:
+    container_name: minio
+    command: server --address :9101 /data
+    environment:
+      MINIO_ACCESS_KEY: 93UD14VE2K1SHSSZE3TU
+      MINIO_SECRET_KEY: Ak6OnEEkroAPYiUU4u73zePedB5Zz0ByNgsLfjhe
+    image: minio/minio
+    network_mode: host
+    ports:
+    - 9101:9101

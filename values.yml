@@ -1,0 +1,85 @@
+halyard:
+  spinnakerVersion: 1.9.1
+  image:
+    repository: gcr.io/spinnaker-marketplace/halyard
+    tag: 1.9.1
+  additionalScripts:
+    enabled: false
+    configMapName: my-halyard-config
+    configMapKey: config.sh
+    create: false
+    data: {}
+  additionalSecrets:
+    create: false
+    data: {}
+  additionalConfigMaps:
+    create: false
+    data: {}
+
+
+dockerRegistries:
+- name: dockerhub
+  address: index.docker.io
+  repositories:
+    - library/alpine
+    - library/ubuntu
+    - library/centos
+    - library/nginx
+
+
+
+kubeConfig:
+  enabled: false
+  secretName: my-kubeconfig
+  secretKey: config
+  contexts:
+  - default
+  deploymentContext: default
+
+ingress:
+  enabled: true
+
+ingressGate:
+  enabled: true
+
+spinnakerFeatureFlags:
+  - artifacts
+  - jobs
+
+nodeSelector: {}
+
+redis:
+  password: password
+  nodeSelector: {}
+  cluster:
+    enabled: false
+
+minio:
+  enabled: true
+  imageTag: RELEASE.2018-06-09T02-18-09Z
+  serviceType: ClusterIP
+  accessKey: spinnakeradmin
+  secretKey: spinnakeradmin
+  bucket: "spinnaker"
+  nodeSelector: {}
+
+gcs:
+  enabled: false
+  project: my-project-name
+  bucket: "<GCS-BUCKET-NAME>"
+  jsonKey: '<INSERT CLOUD STORAGE JSON HERE>'
+
+s3:
+  enabled: false
+  bucket: "<S3-BUCKET-NAME>"
+
+azs:
+  enabled: false
+
+rbac:
+  create: true
+
+serviceAccount:
+  create: true
+  halyardName:
+  spinnakerName:
